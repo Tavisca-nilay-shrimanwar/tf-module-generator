@@ -1,8 +1,4 @@
-variable "aws_dynamodb_table" {
-  type = any
-}
-
-variable "aws_dynamodb_table_item" {
+variable "aws_instance" {
   type = any
 }
 

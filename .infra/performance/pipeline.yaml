@@ -1,0 +1,77 @@
+version: "1"
+# Template for shared library
+template: "dotnetcore8.0perf"
+host_project_path: "tests/Tavisca.Payment.PerformanceTests.Lambda"
+host_project_file: "Tavisca.Payment.PerformanceTests.Lambda.csproj"
+netcore_version: "8.0"
+region: "us-east-1"
+target_app_name: "nextgen-payment-api"
+lambda:
+  function_name: "nextgen-payment-api-perftest"
+  function_handler: "Tavisca.Payment.PerformanceTests.Lambda::Tavisca.Payment.PerformanceTests.Lambda.Function::FunctionHandler"
+  function_timeout: 180
+  function_memory_size: 256
+  runtime: "dotnet8"
+  environment_variables:
+    enableDebug: true
+    enableLogging: true
+    logRequest: true
+    logResponse: true
+    operationTimeoutMs: 60000
+    readSettings : "environment"
+    paymentapiHost : "https://payment.stage.cnxloyalty.com"
+    configApiBaseUrl : "https://configuration.stage.cnxloyalty.com/configuration/api"
+  function_package:
+    s3_bucket_name: "nextgen-performance"
+    s3_prefix: "nextgen-payment-api"
+test_runner:
+  version : "1.0.5"
+  runtime : "8.0"
+  run_settings_default:
+    StartDelay: "0"
+    timeInterval: "1000"
+    stepSize: "1"
+    stepInterval: "1"
+    stepCount: "1"
+    runID: "nextgen-payment-api-perf-test"
+    runTime: "300"
+    runInfo: "nextgen-payment-api perf test run"
+    testName: ["PaymentAuthorization","PaymentCapture","PaymentCredit","PaymentRefund","PaymentReveseAuth","PaymentSale","PaymentRetrievePaymentMethod","PaymentSearch", "ValidateBin"]
+  app_settings_schema:
+    - key: cnx-tenantId
+      type: string
+      default: "2pq3iaipudc"
+    - key: cnx-userIp
+      type: string
+      default: "127.0.0.1"
+    - key: cnx-environment-token
+      type: string
+      default: "sg"
+    - key: stackid
+      type: string
+      default: "eb87cb49-40df-4320-b2a4-e16a74b39922"
+    - key: posId
+      type: string
+      default: "1kdp15mltova"
+    - key: token
+      type: string
+      default: "fiReODM3ZGQ3NmItNWNmMi00YTk4LTgzMzUtMTVmYTUzMjhjZmZlfE1tODViek5oWlRrNWRITT18WkdWbVlYVnNkQT09fiRe"
+    - key: reconciliationId
+      type: string
+      default: "1919919"
+    - key: cnx-userid
+      type: string
+      default: "testUser"
+    - key: paymentId
+      type: string
+      default: "1kmmijbpj0wy"
+    - key: skipBinValidation
+      type: string
+      default: "true"
+
+tags:
+  product: "Paymentapi"
+  product_owner: "Nirmit"
+  function_owner: "Nirmit"
+  squad: "Payment"
+  tribe: "Bizops"

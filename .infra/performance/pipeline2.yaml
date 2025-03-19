@@ -1,0 +1,279 @@
+--- 
+host_project_file: Tavisca.Air.PerformanceTestLambda.csproj
+host_project_path: ./Tavisca.Air.PerformanceTestLambda
+lambda: 
+  environment_variables: 
+    baseUrl: "https://air-be.stage.cnxloyalty.com/api/air/v1.0"
+    culture: en-us
+    environmentTokenHeader: SG
+    tenantId: mock
+    transitCodeUrl: "https://transit-service.stage.cnxloyalty.com/api/v1.0/transitService/generateTransitCode"
+  function_handler: "Tavisca.Air.PerformanceTestLambda::Tavisca.Air.PerformanceTestLambda.Function::FunctionHandler"
+  function_memory_size: 256
+  function_name: engines-air-perf
+  function_package: 
+    s3_bucket_name: nextgen-performance
+    s3_prefix: engines-air
+  function_timeout: 600
+  runtime: dotnet8
+netcore_version: "8.0"
+performance_core_netcore_version: "3.1"
+region: us-east-1
+tags: 
+  AppName: "engines-air-perftest"
+  Backup: "no"
+  BusinessUnit: "travel.app"
+  Environment: "stage"
+  Product: "fli"
+  InfraOwner: "flights-infra-owners@tavisca.com"
+  Name: "fli-engines-air-perftest"
+  squad: "System Robustness"
+  tribe: Flights
+target_app_name: engines-air
+test_runner: 
+  app_settings_schema: 
+    - 
+      default: 90
+      key: percentile
+      type: string
+    - 
+      default: 10
+      key: responseTimeThreshold
+      type: string
+    - 
+      default: true
+      key: debug
+      type: booleanParam
+    - 
+      default: 25
+      key: pgSize
+      type: string
+    - 
+      default: true
+      key: multiResult
+      type: string
+    - 
+      choices: 
+        - RoundTrip
+        - OneWay
+        - MultiCity
+      key: tripType
+      type: choice
+    - 
+      choices: 
+        - Domestic
+        - International
+        - Mixed
+      key: searchType
+      type: choice
+    - 
+      default: true
+      key: isBrandedFaresEnabled
+      type: booleanParam
+    - 
+      default: 0
+      key: priceRatio
+      type: string
+    - 
+      default: 0
+      key: bookRatio
+      type: string
+    - 
+      default: true
+      key: isQueryPlannerEnabled
+      type: booleanParam
+    - 
+      default: false
+      key: isFlexiSearch
+      type: booleanParam
+    - 
+      default: false
+      key: isFlightByFlightSearch
+      type: booleanParam
+    - 
+      default: false
+      key: IsMultiTicketInboundSearch
+      type: booleanParam
+    - 
+      default: false
+      key: UseReceptionDeskSdk
+      type: booleanParam
+    - 
+      default: "https://private-data.stage.oski.io/configuration/api"
+      description: |
+          BASEURL:
+          -endpoint on which lambda will hit
+      key: configurationBaseUri
+      type: string
+    - 
+      default: 2o9o3ae99ts
+      key: AgencyTenantId
+      type: string
+    - 
+      default: mKgpaTDKiBvpfppEYFj7NVTJPLL4l5Fh
+      key: CnxApiKey
+      type: string
+    - 
+      default: "0"
+      key: ClientProgramGroupId
+      type: string
+    - 
+      default: OrxeSdkClientUniqueTestUser
+      key: ClientUniqueId
+      type: string
+    - 
+      default: 3h9nmmzt69s
+      key: ClientTenantId
+      type: string
+    - 
+      default: 3gdsbc87uv4
+      key: OverrideTenantId
+      type: string
+    - 
+      default: stgloyalty
+      key: OverrideAgencyTenantId
+      type: string
+    - 
+      default: "https://air-be.stage.cnxloyalty.com/api/air/v1.0"
+      description: |
+          BASEURL:
+          -endpoint on which lambda will hit
+      key: baseUrl
+      type: string
+    - 
+      default: "https://cart.stage.cnxloyalty.com/api/cart/v2.0"
+      description: |
+          CART BASEURL:
+          -endpoint on which lambda will hit
+      key: cartBaseUrl
+      type: string
+    - 
+      default: mock
+      key: tenantId
+      type: string
+    - 
+      default: "101"
+      key: clientId
+      type: string
+    - 
+      default: "1116"
+      key: programId
+      type: string
+    - 
+      default: domain_api.loyalty_service.rm_service.content.usg_service
+      key: mockedServices
+      type: string
+    - 
+      default: travelport_p1
+      key: supplierAccounts
+      type: string
+    - 
+      default: travelport_p1
+      key: queryPlannerEnabledSupplierAccountids
+      type: string
+    - 
+      default: 4so0bw9lfeu
+      key: bookingId
+      type: string
+    - 
+      default: automation
+      key: consumerType
+      type: string
+    - 
+      default: outproc
+      description: |
+          MOCKSCENARIO:
+          -To call mockSupplier = outproc
+          -To call inproc = inproc
+          -To call inproc with different MockScenario = your own custom
+           value i.e, abccustom mock
+      key: MockScenario
+      type: string
+    - 
+      default: "{\"file_name\":\"perftest\",\"response_delay\":[{\"verb\":\"Search\",\"min\":1000,\"max\":4000},{\"verb\":\"Price\",\"min\":3000,\"max\":4000},{\"verb\":\"Book\",\"min\":3000,\"max\":4000},{\"verb\":\"Cancel\",\"min\":1500,\"max\":2500},{\"verb\":\"TicketCouponDetails\",\"min\":200,\"max\":200},{\"verb\":\"Create_TerminalCommand\",\"min\":170,\"max\":300},{\"verb\":\"End_TerminalCommand\",\"min\":170,\"max\":300},{\"verb\":\"TerminalCommand\",\"min\":200,\"max\":430},{\"verb\":\"SeatMap\",\"min\":416,\"max\":1290},{\"verb\":\"FareRule\",\"min\":471,\"max\":6240},{\"verb\":\"PlaceInQueue\",\"min\":1000,\"max\":1500},{\"verb\":\"PnrList\",\"min\":170,\"max\":300},{\"verb\":\"RetrievePnr\",\"min\":1500,\"max\":2000},{\"verb\":\"AddRemark\",\"min\":1100,\"max\":1400}],\"verbwise_failure_percentage\":[{\"Name\":\"Search\",\"Value\":0},{\"Name\":\"Price\",\"Value\":0},{\"Name\":\"Book\",\"Value\":0},{\"Name\":\"Create_TerminalCommand\",\"Value\":0},{\"Name\":\"End_TerminalCommand\",\"Value\":0},{\"Name\":\"TerminalCommand\",\"Value\":7},{\"Name\":\"SeatMap\",\"Value\":40},{\"Name\":\"FareRule\",\"Value\":0},{\"Name\":\"PlaceInQueue\",\"Value\":7},{\"Name\":\"PnrList\",\"Value\":7},{\"Name\":\"RetrievePnr\",\"Value\":0},{\"Name\":\"TicketCouponDetails\",\"Value\":0},{\"Name\":\"AddRemark\",\"Value\":7}]}"
+      description: "mockfile name, verbwise Response delay and failure percentage"
+      key: WasabiExperimentName
+      type: text
+    - 
+      default: true
+      key: DoccumentTestReport
+      type: booleanParam
+      version : "1.0.4.2"
+      runtime : "6.0"
+  run_settings_default: 
+    StartDelay: 
+      default: "0"
+      description: |
+          Example:
+            Formulae to calculate 2 RPS load with slow ramp up from
+            0.5RPS for 10 minutes each for a duration of 50 minutes
+              - STEPSIZE = 1 
+              - TIMEINTERVAL = 1000/Load(RPS) = 1000/.5 = 2000
+              - STEPINTERVAL = 600
+              - STEPCOUNT = 4
+          
+          
+          
+          
+          STARTDELAY:
+          -test will start after this time delay
+      value: "0"
+    runID: 
+      description: |
+          RUNID:
+          -append to each cid.
+      value: engines-air-perf-test
+    runInfo: 
+      description: |
+          RUNINFO:
+          -general information about test
+      value: "engines-air perf test run"
+    runTime: 
+      default: "3600"
+      description: |
+          RUNTIME:
+          -total time period for whole test(in sec)
+      value: "3600"
+    stepCount: 
+      default: "4"
+      description: |
+          STEPCOUNT:
+          -total number of steps
+      value: "4"
+    stepInterval: 
+      default: "600"
+      description: |
+          STEPINTERVAL
+          -time after which next step will start(in sec).
+      value: "600"
+    stepSize: 
+      description: |
+          STEPSIZE:
+          -Number of request in each TIMEINTERVAL
+      value: "1"
+    testName: 
+      - multiTicketSearchApiTest
+      - priceApiTest
+      - bookApiTest
+      - "searchApiTest:priceApiTest:bookApiTest=12:2:1"
+      - flexiSearchApiTest
+      - cancelApiTest
+      - searchApiTest
+      - featureRolloutApiTest
+      - isCancelAllowedApiTest
+      - essReconciliationApiTest
+      - upsellApiTest
+      - onlineExchangeSearchApiTest
+      - updateCreditApiTest
+      - AddToCartApiTest
+      - CheckoutBookApiTest
+      - E2ECartApiTest
+      - "searchApiTest:AddToCartApiTest:CheckoutBookApiTest=3:6:1"
+      - "multiTicketSearchApiTest:MultiTicketPriceApiTest:MultiTicketBookApiTest=3:6:1"
+      - facetApiTest
+    timeInterval: 
+      default: "2000"
+      description: |
+          TIMEINTERVAL:
+          -Time interval (in ms) in which number of request equals to stepSize will be generated
+      value: "2000"
